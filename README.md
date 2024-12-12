@@ -29,8 +29,7 @@ This repository focuses on integrating a **synthesizability policy** into the **
   - **Negative Pairs**: Molecules B that do not react as expected.
 
 #### Model Details
-- **Architecture**: 
-- **Loss Function**:  to maximize the distance between negative pairs and minimize for positive pairs.
+- **Loss Function**: Triplet loss with a margin to maximize the distance between negative pairs and minimize for positive pairs.
 - **Output**: A value between 0 and 1:
   - Closer to **0**: Indicates a negative pair (unlikely to react).
   - Closer to **1**: Indicates a positive pair (likely to react).
