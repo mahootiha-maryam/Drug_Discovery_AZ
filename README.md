@@ -1,4 +1,4 @@
-# AstraZeneca Internship Project: Enhancing Molecular Synthesizability in ReInvent
+# Enhancing Molecular Synthesizability in ReInvent
 
 ## Overview
 
