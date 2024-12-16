@@ -1,7 +1,24 @@
-In this directory we are going through preparing dataset for training the contrastive model.
+# Dataset Preparation for Contrastive Learning Model
 
-This file is dedicated to make a dataset for training the contrastive model. 
-The features of molecules are extracted by the morgan fingerprints with 1024 size. The reaction rules are extracted based on one hot vector and as we had 56 valid reaction rules this feature vector size is 56.
+This repository contains the necessary scripts for preparing datasets to train a contrastive learning model for chemical reactions.
 
-This file is dedicated to make a dataset for training the contrastive model. 
-The features of molecules are extracted by the morgan fingerprints with 1024 size. The reaction rules are extracted based on difference of fingerprints in reactions and the feature vector size 2048. 
+## 📁 Repository Contents
+
+### 1. Making_pairs.ipynb
+Jupyter notebook for generating positive and negative molecular pairs for training. For a detailed explanation of the pair generation process, see [Pair Generation Documentation](https://github.com/mahootiha-maryam/Drug_Discovery_AZ/blob/main/Making_Dataset/Making_Pairs.ipynb).
+
+### 2. Dataset Generation Scripts
+
+#### 🧬 making_dataset_FP_OhE.py
+Creates datasets using Morgan fingerprints and one-hot encoded reaction rules.
+
+**Features:**
+- Molecular representation: Morgan fingerprints (size: 1024)
+- Reaction rules: One-hot encoding (size: 56)
+
+#### 🔄 making_dataset_FP_diff.py
+Generates datasets using Morgan fingerprints and fingerprint differences for reactions.
+
+**Features:**
+- Molecular representation: Morgan fingerprints (size: 1024)
+- Reaction representation: Fingerprint differences (size: 2048)
