@@ -16,7 +16,7 @@ Creates datasets using Morgan fingerprints and one-hot encoded reaction rules.
 - Molecular representation: Morgan fingerprints (size: 1024)
 - Reaction rules: One-hot encoding (size: 56)
 
-#### 🔄 making_dataset_FP_diff.py
+#### 🧬 making_dataset_FP_diff.py
 Generates datasets using Morgan fingerprints and fingerprint differences for reactions.
 
 **Features:**
