@@ -24,3 +24,6 @@ This directory focuses on training a **contrastive model** leveraging molecule f
 
 ### Model Architecture
 - **Network.py**: Defines the architecture for the contrastive learning model.
+
+### Saved Model
+- The best model is saved [here](https://zenodo.org/records/14507582/files/best_model_Tr_Oh.ckpt?download=1).
