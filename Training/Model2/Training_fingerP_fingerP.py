@@ -3,6 +3,12 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import torch.nn as nn
 import pandas as pd
+import neptune
+
+run = neptune.init_run(
+    project="mahootiha-maryam/Drug-Discovery-AI",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJmNGE0YWJjZi0yMjFhLTQ5Y2YtOGEwZS03OTY3NzA4MDI4YmUifQ==",
+)
 
 class ReactionDataset(torch.utils.data.Dataset):
     def __init__(self, inputs_b, inputs_c, inputs_r, labels):
@@ -77,61 +83,6 @@ class ContrastiveModel1(nn.Module):
         output = self.sigmoid(output)
         
         return output
-
-    
-class ContrastiveModel2(nn.Module):
-    def __init__(self, input_dim_b, input_dim_c, input_dim_r, embedding_dim, hidden_dim, dropout_rate=0.3):
-        super(ContrastiveModel2, self).__init__()
-        
-        # Embedding layers for molecule B, molecule C, and rule R
-        self.embedding_b = nn.Linear(input_dim_b, embedding_dim)
-        self.embedding_c = nn.Linear(input_dim_c, embedding_dim)
-        self.embedding_r = nn.Linear(input_dim_r, embedding_dim)
-        
-        # Batch normalization layers for embeddings
-        self.bn_emb = nn.BatchNorm1d(embedding_dim)
-        
-        # Dropout layer for embeddings
-        self.dropout_emb = nn.Dropout(p=dropout_rate)
-        
-        # Fully connected layers
-        self.fc1 = nn.Linear(embedding_dim * 3, hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
-        self.fc3 = nn.Linear(hidden_dim, 1)
-        
-        # Batch normalization layer for fully connected layers
-        self.bn_fc = nn.BatchNorm1d(hidden_dim)
-        
-        # Dropout layer for fully connected layers
-        self.dropout_fc = nn.Dropout(p=dropout_rate)
-        
-        # Activation functions
-        self.relu = nn.LeakyReLU()  # Changed from ReLU to LeakyReLU
-        self.sigmoid = nn.Sigmoid()
-        
-    def forward(self, b, c, r):
-        # Embed molecule B, molecule C, and rule R
-        emb_b = self.embedding_b(b)
-        emb_c = self.embedding_c(c)
-        emb_r = self.embedding_r(r)
-        
-        # Apply batch normalization and dropout to embeddings
-        emb_b = self.dropout_emb(self.bn_emb(emb_b))
-        emb_c = self.dropout_emb(self.bn_emb(emb_c))
-        emb_r = self.dropout_emb(self.bn_emb(emb_r))
-        
-        # Concatenate the embeddings
-        combined = torch.cat((emb_b, emb_c, emb_r), dim=1)
-        
-        # Pass through fully connected layers with batch normalization, dropout, and activation
-        hidden1 = self.relu(self.bn_fc(self.fc1(combined)))
-        hidden1 = self.dropout_fc(hidden1)
-        hidden2 = self.relu(self.bn_fc(self.fc2(hidden1)))
-        hidden2 = self.dropout_fc(hidden2)
-        output = self.fc3(hidden2)
-        output = self.sigmoid(output)
-        
-        return output
     
 def triplet_loss(output_pos, output_neg, margin=1.0):
     loss = nn.functional.relu(margin - output_pos + output_neg)
@@ -143,13 +94,6 @@ input_dim_r = 2048
 embedding_dim = 100
 hidden_dim = 50
 num_epochs = 100
-
-import neptune
-
-run = neptune.init_run(
-    project="mahootiha-maryam/Drug-Discovery-AI",
-    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJmNGE0YWJjZi0yMjFhLTQ5Y2YtOGEwZS03OTY3NzA4MDI4YmUifQ==",
-)
 
 class EarlyStopping:
     def __init__(self, patience=5, min_delta=0, verbose=False):
