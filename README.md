@@ -35,7 +35,7 @@ This repository focuses on integrating a **synthesizability policy** into the **
   - Closer to **1**: Indicates a positive pair (likely to react).
 
 ### Resources
--In this link, some files can be found like positive and negative pairs datasets and also the checkpoint for the trained Model3:
+- In this link, some files can be found like positive and negative pairs datasets and also the checkpoint for the trained Model3:
 https://zenodo.org/records/14507582
 - The requirement.yml file contains the libraries needed to develop the code.
 
